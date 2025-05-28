@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+#编辑文章
+{% block title %}编辑文章{% endblock %}
+
+{% block content %}
+    <div class="card"> {# 包裹在卡片里提供背景 #}
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">编辑文章</h2>
+
+            {# Flash 消息区域 - base.html 已经包含 #}
+
+            {# 表单action指向当前编辑的URL #}
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">文章标题 <span class="text-danger">*</span></label>
+                    {# 预填充当前文章的标题 #}
+                    <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">文章内容 <span class="text-danger">*</span></label>
+                     {# 预填充当前文章的内容 #}
+                    <textarea class="form-control" id="content" name="content" rows="10" required>{{ post.content }}</textarea>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">保存修改</button>
+                    {# 添加一个取消按钮 #}
+                    <a href="{{ url_for('my_posts') }}" class="btn btn-outline-secondary">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

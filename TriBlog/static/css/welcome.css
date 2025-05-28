@@ -1,0 +1,84 @@
+/* static/css/welcome.css */
+
+/* 全屏背景和布局 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* 防止滚动条 */
+    font-family: sans-serif; /* 简单字体 */
+    color: #fff; /* 文字颜色为白色 */
+}
+
+.welcome-container {
+    position: relative; /* 使内部绝对定位元素相对于它定位 */
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/2.jpg'); /* 设置背景图片，请替换为你的图片路径 */
+    background-size: cover; /* 覆盖整个容器 */
+    background-position: center; /* 图片居中显示 */
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: center; /* 水平居中内容 */
+    align-items: center; /* 垂直居中内容 */
+    text-align: center; /* 文本居中 */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色蒙层，提高文字可读性 */
+    z-index: 1; /* 确保蒙层在背景上，内容下 */
+}
+
+.welcome-content {
+    position: relative; /* 使内容浮在蒙层之上 */
+    z-index: 2;
+    padding: 20px; /* 内容内边距 */
+}
+
+.welcome-content h1 {
+    font-size: 3em; /* 大标题 */
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 文字阴影，增加可读性 */
+}
+
+.welcome-content p {
+    font-size: 1.2em; /* 副标题/描述文字 */
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* 文字阴影 */
+}
+
+.welcome-links a {
+    display: inline-block; /* 使链接可以设置内边距和外边距 */
+    margin: 0 15px; /* 链接之间的间距 */
+    padding: 10px 25px;
+    border: 2px solid #fff; /* 白色边框 */
+    color: #fff; /* 白色文字 */
+    text-decoration: none; /* 移除下划线 */
+    font-size: 1.1em;
+    border-radius: 5px; /* 圆角 */
+    transition: background-color 0.3s ease, color 0.3s ease; /* 添加过渡效果 */
+}
+
+.welcome-links a:hover {
+    background-color: #fff; /* 悬停时背景变白 */
+    color: #333; /* 悬停时文字变深色 */
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .welcome-content h1 {
+        font-size: 2em;
+    }
+    .welcome-content p {
+        font-size: 1em;
+    }
+    .welcome-links a {
+        margin: 0 10px;
+        padding: 8px 20px;
+    }
+}

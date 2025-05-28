@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}我的信息{% endblock %} {# 修正标题 #}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center"> {# text-center 帮助内容居中 #}
+            <div class="card">
+                <div class="card-body">
+                    <!-- Avatar Section - 统一使用 profile-display-avatar 类 -->
+                    <div class="mb-4">
+                        {% if user_info and user_info.avatar %} {# 确保 user_info 存在且 avatar 字段不为空 #}
+                            <img src="{{ url_for('static', filename=user_info.avatar) }}"
+                                 alt="用户头像"
+                                 class="profile-display-avatar"> {# 使用你在 style.css 中定义的大头像样式 #}
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/default-avatar.png') }}"
+                                 alt="默认头像"
+                                 class="profile-display-avatar"> {# 默认头像也使用这个样式 #}
+                        {% endif %}
+                    </div>
+
+                    <!-- User Information Section -->
+                    <div class="user-info text-center">
+                        <h2 class="mb-3">{{ user_info.username }}</h2>
+                        <div class="mb-2">
+                            <strong>Email:</strong> {{ user_info.email or '未设置' }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>电话:</strong> {{ user_info.phone or '未设置' }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>地区:</strong> {{ user_info.region or '未设置' }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>个人简介:</strong> {{ user_info.bio or '未设置' }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>注册时间:</strong> {{ user_info.created_at.strftime('%Y-%m-%d') if user_info.created_at else '未知' }}
+                        </div>
+                    </div>
+
+                    <!-- Edit Profile Button -->
+                    <div class="mt-4">
+                        <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">
+                            编辑个人信息
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

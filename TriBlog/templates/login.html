@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}欢迎登录TriBlog博客{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+{% block content %}
+    <body class="login-register">
+    <div class="hero-banner" style="background-image: url('{{ url_for('static', filename='images/3.jpg') }}');">
+    <div class="hero-overlay">
+        <h1 class="display-4 fw-bold text-white">欢迎登录TriBlog</h1>
+        <p class="lead text-white-50">勇敢的往前走吧！有趣的灵魂，万里挑一。</p>
+    </div>
+</div>
+<div class="auth-bg-container"></div>
+<div class="auth-bg-overlay"></div>
+<div class="auth-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">用户登录</h2>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">登录</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        还没有账号？<a href="{{ url_for('register') }}">立即注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

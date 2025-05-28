@@ -1,0 +1,48 @@
+<!-- templates/create_post.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>创建新文章</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <!-- Title Field -->
+                        <div class="form-group mb-3">
+                            <label for="title" class="form-label">标题</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+
+                        <!-- Content Field -->
+                        <div class="form-group mb-3">
+                            <label for="content" class="form-label">内容</label>
+                            <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="form-group mb-4">
+                            <label for="image" class="form-label">上传图片 (可选)</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                            <div class="form-text">支持格式: JPG, PNG, GIF</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary me-md-2">
+                                <i class="bi bi-send-fill"></i> 发布文章
+                            </button>
+                            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> 取消
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

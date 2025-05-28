@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}我的收藏{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    {# 左侧导航栏 Col #}
+    {% if session.get('user_id') %}
+        <div class="col-md-3">
+            <div class="card sidebar">
+                <div class="card-body">
+                     <h5 class="card-title">导航</h5>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item {% if active_page == 'index' %}active{% endif %}">
+                            <a href="{{ url_for('index') }}">所有文章</a>
+                        </div>
+                        <div class="list-group-item {% if active_page == 'create_post' %}active{% endif %}">
+                            <a href="{{ url_for('create_post') }}">创建新文章</a>
+                        </div>
+                        <div class="list-group-item {% if active_page == 'my_posts' %}active{% endif %}">
+                            <a href="{{ url_for('my_posts') }}">我的文章</a>
+                        </div>
+                        <div class="list-group-item {% if active_page == 'my_favorites' %}active{% endif %}"> {# 确保这里是 active #}
+                            <a href="{{ url_for('my_favorites') }}">我的收藏</a>
+                        </div>
+                        <div class="list-group-item {% if active_page == 'profile' %}active{% endif %}">
+                            <a href="{{ url_for('profile') }}">我的信息</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# 右侧内容区域 Col #}
+        <div class="col-md-9">
+    {% else %}
+        {# 未登录时内容区域占满12列 #}
+        <div class="col-md-12">
+    {% endif %}
+
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">我的收藏</h2>
+            <div class="list-group">
+                {% if posts %}
+                    {% for post in posts %}
+                        <div class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <h5 class="mb-1 me-auto">
+                                    <a href="{{ url_for('post_detail', post_id=post['id']) }}" class="text-decoration-none">{{ post['title'] }}</a>
+                                </h5>
+                                {# 这里显示的是 FavoriteModel 中的 created_at，表示收藏时间 #}
+                                <small class="text-muted me-3">收藏于: {{ post['created_at'].strftime('%Y-%m-%d %H:%M') }}</small>
+                            </div>
+                            <p class="mb-1">{{ post['content'][:200] }}...</p>
+                            <small class="text-muted">作者: {{ post['author_username'] }}</small>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>您还没有收藏任何文章。</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+
+    </div> {# End of Col (for content) #}
+</div> {# End of Row #}
+    </div>
+
+{% endblock %}

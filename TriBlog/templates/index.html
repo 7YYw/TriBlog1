@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}博客主页{% endblock %}
+
+{% block content %}
+
+    {# 使用 Bootstrap Row 和 Col 布局 #}
+
+    <div class="hero-banner" style="background-image: url('{{ url_for('static', filename='images/6.jpg') }}');">
+        <div class="hero-overlay">
+            <h1 class="display-4 fw-bold text-white">欢迎来到TriBlog</h1>
+            <p class="lead text-white-50">勇敢的往前走吧！有趣的灵魂，万里挑一。</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {# 左侧导航栏 Col #}
+        {% if session.get('user_id') %}
+            <div class="col-md-3">
+                <div class="card sidebar"> {# 使用card包裹提供背景 #}
+                    <div class="card-body">
+                       <h5 class="card-title">导航</h5>
+                        <div class="list-group list-group-flush"> {# flush移除边框 #}
+                            {# 添加导航链接 #}
+                            <div class="list-group-item {% if active_page == 'profile' %}active{% endif %}">
+                                <a href="{{ url_for('profile') }}" target="_blank" >我的信息</a> {# 链接到新的“我的信息”页面 #}
+                            </div>
+                            <div class="list-group-item {% if active_page == 'create_post' %}active{% endif %}">
+                                <a href="{{ url_for('create_post') }}" target="_blank" >创建新文章</a>
+                            </div>
+                            <div class="list-group-item {% if active_page == 'my_posts' %}active{% endif %}">
+                                <a href="{{ url_for('my_posts') }}">我的文章</a> {# 链接到新的“我的文章”页面 #}
+                            </div>
+                             <div class="list-group-item {% if active_page == 'favorite_posts' %}active{% endif %}">
+                                <a href="{{ url_for('my_favorites') }}">我的收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# 右侧内容区域 Col #}
+            <div class="col-md-9">
+        {% else %}
+            {# 未登录时内容区域占满12列 #}
+            <div class="col-md-12">
+        {% endif %}
+
+            <h1 class="mb-4">博客文章</h1>
+
+            {# 添加文章按钮 - 只在登录时显示 #}
+            {% if session.get('user_id') %}
+                <a class="btn btn-primary mb-4" href="{{ url_for('create_post') }}">
+                    {# <i class="fas fa-plus"></i> 创建新文章 #} <!-- 如果使用Font Awesome图标 -->
+                    创建新文章
+                </a>
+            {% endif %}
+
+            <!-- 文章列表 -->
+            <div class="list-group">
+                {% if posts %}
+                    {% for post in posts %}
+                        <!-- list-group-item 可以作为文章的概要项 -->
+                        <div class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between align-items-center"> {# Added align-items-center #}
+                                <!-- 文章标题，可以做成链接到文章详情页 -->
+                                <h5 class="mb-1 me-auto"> {# me-auto pushes buttons to the right #}
+                                    <a href="{{ url_for('post_detail', post_id=post['id']) }}" class="text-decoration-none">{{ post['title'] }}</a> {# 链接到详情页 #}
+                                </h5>
+                                <small class="text-muted me-3">创建于: {{ post['created_at'].strftime('%Y-%m-%d %H:%M') }}</small>
+                                {# --- 新增：显示编辑/删除按钮，仅当当前用户是作者时 --- #}
+                                {% if post['user_id'] == current_user_id %}
+                                     <div class="btn-group" role="group" aria-label="Edit/Delete">
+                                         <a href="{{ url_for('edit_post', post_id=post['id']) }}" class="btn btn-outline-secondary btn-sm">编辑</a>
+                                          {# 删除按钮使用POST表单提交 #}
+                                         <form action="{{ url_for('delete_post', post_id=post['id']) }}" method="POST" onsubmit="return confirm('确定要删除这篇文章吗？');" class="d-inline"> {# d-inline keeps button on same line #}
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">删除</button>
+                                         </form>
+                                     </div>
+                                {% endif %}
+                                {# --- 结束新增 --- #}
+                            </div>
+                            <!-- 文章摘要 -->
+                            <p class="mb-1">{{ post['content'][:200] }}...</p> <!-- 显示内容前200字符作为摘要 -->
+                            <small class="text-muted">作者: {{ post['author_username'] }}</small>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>还没有文章，快来创建第一篇文章吧！</p>
+                {% endif %}
+            </div>
+        </div> {# End of Col for content area (md-9 or md-12) #}
+    </div> {# End of Row #}
+
+{% endblock %}

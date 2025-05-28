@@ -1,0 +1,80 @@
+<!-- templates/edit_profile.html -->
+{% extends "base.html" %}
+
+{% block title %}编辑个人信息{% endblock %} {# 修正标题 #}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>编辑个人信息</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <!-- Avatar Upload -->
+                        <div class="form-group text-center mb-4">
+                            {% if user_info.avatar %}
+                                {# 使用用户当前头像路径 #}
+                                <img src="{{ url_for('static', filename=user_info.avatar) }}"
+                                     class="img-fluid rounded-circle mb-3"
+     style="width: 150px; height: 150px; object-fit: cover;"
+                                     alt="当前头像">
+                            {% else %}
+                                {# 使用默认头像路径 #}
+                                <img src="{{ url_for('static', filename='images/default-avatar.png') }}"
+                                     class="img-fluid rounded-circle mb-3"
+                                     style="width: 150px; height: 150px; object-fit: cover;"
+                                     alt="默认头像">
+                            {% endif %}
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="avatar" name="avatar">
+                                <label class="custom-file-label" for="avatar">选择新头像</label> {# 提示用户选择新头像 #}
+                            </div>
+                        </div>
+
+                        <!-- User Information Fields -->
+                        <div class="form-group mb-3"> {# Added mb-3 for spacing #}
+                            <label for="email">邮箱</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   value="{{ user_info.email or '' }}" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="phone">电话</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   value="{{ user_info.phone or '' }}">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="region">地区</label>
+                            <input type="text" class="form-control" id="region" name="region"
+                                   value="{{ user_info.region or '' }}">
+                        </div>
+
+                        <div class="form-group mb-4"> {# Increased spacing #}
+                            <label for="bio">个人简介</label>
+                            <textarea class="form-control" id="bio" name="bio" rows="3">{{ user_info.bio or '' }}</textarea>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">保存更改</button>
+                            <a href="{{ url_for('profile') }}" class="btn btn-secondary ml-2">取消</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Show the filename when a file is selected
+document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+    var fileName = document.getElementById("avatar").files[0].name;
+    var nextSibling = e.target.nextElementSibling;
+    nextSibling.innerText = fileName;
+});
+</script>
+{% endblock %}

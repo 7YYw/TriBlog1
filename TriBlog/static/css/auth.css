@@ -1,0 +1,23 @@
+/* static/css/auth.css */
+.auth-bg-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0; left: 0;
+    z-index: 0;
+    background-image: url('../images/3.jpg'); /* 改为2.jpg */
+    background-size: cover;
+    background-position: center;
+}
+.auth-bg-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0; left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+}
+.auth-content {
+    position: relative;
+    z-index: 2;
+}

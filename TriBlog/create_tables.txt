@@ -1,0 +1,32 @@
+-- 创建数据库（指定默认字符集和排序规则）
+CREATE DATABASE IF NOT EXISTS blogdb 
+    CHARACTER SET utf8mb4 
+    COLLATE utf8mb4_unicode_ci;
+
+USE blogdb;
+
+-- 用户表 (UserModel)
+CREATE TABLE UserModel (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,  -- 缩短用户名长度
+    password VARCHAR(255) NOT NULL COMMENT '密码哈希值（推荐使用 bcrypt 或 SHA-256）',
+    is_admin TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- 用户信息表 (UserInfoModel)
+CREATE TABLE UserInfoModel (
+    user_id INT PRIMARY KEY,
+    nickname VARCHAR(50) COMMENT '用户昵称',
+    phone VARCHAR(20) UNIQUE COMMENT '唯一电话号码',  -- 添加唯一约束
+    email VARCHAR(255) UNIQUE COMMENT '唯一邮箱',      -- 添加唯一约束
+    introduce TEXT,
+    FOREIGN KEY (user_id) REFERENCES UserModel(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 设置表 (SettingModel)
+CREATE TABLE SettingModel (
+    `key` VARCHAR(255) PRIMARY KEY,  -- 直接使用 key 作为主键
+    value TEXT NOT NULL
+) ENGINE=InnoDB;

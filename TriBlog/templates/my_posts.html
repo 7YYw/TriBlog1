@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}我的文章{% endblock %}
+
+{% block content %}
+     <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">我的文章</h2>
+
+            {# Flash 消息区域，base.html 已经处理 #}
+
+            <!-- 文章列表 -->
+            <div class="list-group">
+                {% if posts %}
+                    {% for post in posts %}
+                        <!-- list-group-item 可以作为文章的概要项 -->
+                        <div class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <!-- 文章标题，链接到文章详情页 -->
+                                <h5 class="mb-1 me-auto">
+                                    <a href="{{ url_for('post_detail', post_id=post['id']) }}" class="text-decoration-none">{{ post['title'] }}</a> {# **修改** #}
+                                </h5>
+                                <small class="text-muted me-3">创建于: {{ post['created_at'].strftime('%Y-%m-%d %H:%M') }}</small>
+
+                                <!-- 编辑/删除按钮 -->
+                                <div class="btn-group" role="group" aria-label="Edit/Delete">
+                                    <a href="{{ url_for('edit_post', post_id=post['id']) }}" class="btn btn-outline-secondary btn-sm">编辑</a>
+                                    <form action="{{ url_for('delete_post', post_id=post['id']) }}" method="POST" onsubmit="return confirm('确定要删除这篇文章吗？');" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">删除</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- 文章摘要 -->
+                            <p class="mb-1">{{ post['content'][:200] }}...</p> <!-- 显示内容前200字符作为摘要 -->
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>您还没有发布任何文章。</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

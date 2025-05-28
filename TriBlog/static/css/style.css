@@ -1,0 +1,316 @@
+/* static/css/style.css */
+
+/* 调整body顶部内边距，以适应固定顶部的导航栏 */
+body {
+    padding-top: 100px;
+    background-color: #f8f9fa; /* Fallback background */
+}
+
+/* 主内容区域背景图和蒙层 */
+/* 应用于 login, register, index 等继承 base.html 的页面 */
+.main-content {
+    position: relative; /* 使内部绝对定位元素相对于它定位 */
+    background: url('../images/4.jpg') no-repeat center center; /* 图片路径 */
+    background-size: cover;  /* 覆盖整个容器 */
+    min-height: calc(100vh - 80px); /* 视口高度减去导航栏高度 */
+    display: flex; /* 使用 Flexbox，方便居中内容 */
+    align-items: flex-start;  /* 内容靠上 */
+    padding-bottom: 20px; /* 底部留白 */
+    overflow: hidden;  /* 防止滚动条 */
+}
+
+/* **新增或修改的部分：应用背景图和蒙层到 body 而不是 main-content**
+   **这样可以确保背景覆盖整个页面，包括 body padding-top 的区域** */
+body {
+    padding-top: 80px;
+    background-image: url('../images/4.jpg'); /* 设置背景图片 */
+    background-size: cover; /* 覆盖整个视口 */
+    background-position: center; /* 图片居中 */
+    background-attachment: fixed; /* 背景图固定，不随内容滚动 */
+    position: relative; /* 方便 overlay 定位 */
+}
+.main-content {
+    background: rgba(255,255,255,0.85); /* 可选：加一层白色半透明遮罩，提升内容可读性 */
+    min-height: 100vh;
+}
+/* 新增 body 的半透明蒙层 */
+body::before {
+    content: "";
+    position: fixed; /* 固定蒙层覆盖整个视口 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 64, 0.24); /* 深蓝色半透明蒙层 */
+    z-index: -1; /* 确保蒙层在内容下方，但在背景图上方 */
+}
+
+/* 调整 Bootstrap container 的顶部外边距，确保消息和内容不被导航栏遮挡 */
+.container.mt-4 {
+    margin-top: 1.5rem !important;
+    padding-top: 1rem;
+    position: relative; /* 保证内容在蒙层之上，即使蒙层 z-index 是 -1 */
+    z-index: 1;
+}
+
+/* 消息闪现区域样式 */
+.alert-messages {
+    margin-bottom: 1.5rem;
+    /* margin-top: 20px; */ /* 如果消息区域在container内部，则不再需要单独的顶部margin */
+}
+
+/* 增加一些通用元素的上下外边距 */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+.card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* **新增：让卡片有半透明背景，以便看到背景图** */
+    background-color: rgba(255, 255, 255, 0.85); /* 白色半透明 */
+    border-radius: 0.5rem; /* slightly larger radius */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* more prominent shadow */
+}
+
+.card-body {
+    padding: 1.5rem; /* 增加内边距 */
+    background-color: rgba(255, 255, 255, 0.85); /* 白色半透明 */
+    border-radius: 0.5rem; /* slightly larger radius */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* more prominent shadow */
+    /* Optional: Adjust padding for specific elements */
+     /* Optional: Further adjust padding if needed */
+}
+
+
+.list-group {
+     /* **新增：让列表组有半透明背景** */
+    background-color: rgba(255, 255, 255, 0.85); /* 白色半透明 */
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+
+.list-group-item {
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+     /* Inherit background from list-group or set explicitly if needed */
+     /* background-color: rgba(255, 255, 255, 0.9); */
+}
+
+.list-group-item h5 {
+    margin-top: 0;
+}
+
+.list-group-item p {
+     margin-bottom: 0.5em;
+}
+
+/* 表单输入框样式，去除渐变，恢复常规外观 */
+/* .form-control 选择器用于所有输入框和文本域 */
+.form-control {
+    background: #fff; /* 白色背景 */
+    color: #222;      /* 深色文字，便于阅读 */
+    border: 1px solid #ced4da; /* 常规浅灰色边框 */
+    box-shadow: none; /* 去除阴影 */
+    transition: border-color 0.2s;
+}
+
+/* 输入框聚焦时样式 */
+.form-control:focus {
+    border-color: #1e80a1; /* 聚焦时边框变蓝 */
+    background: #fff;      /* 保持白色背景 */
+    color: #222;           /* 保持深色文字 */
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.1); /* 轻微蓝色阴影 */
+}
+
+/* 占位符文字颜色 */
+.form-control::placeholder {
+    color: #adb5bd; /* 浅灰色占位符 */
+}
+
+/* 表单标签样式 */
+.form-label {
+    color: #333;        /* 深色标签文字 */
+    font-weight: bold;  /* 加粗 */
+}
+
+/* 去除侧边栏 list-group-item 的背景和边框高亮 */
+.sidebar .list-group-item {
+    background-color: transparent !important;
+    border: none !important;
+    color: #222 !important; /* 让文字更深色 */
+    box-shadow: none !important;
+}
+
+/* 链接悬停时只改变文字颜色，不加背景 */
+.sidebar .list-group-item a:hover {
+    background-color: transparent !important;
+    color: rgb(0, 110, 161) !important;
+}
+
+/* 激活状态的父元素，其内部链接的样式 */
+.sidebar .list-group-item.active {
+    background-color: rgba(0, 123, 255, 0.1) !important; /* 增加一个浅蓝色背景，表示激活 */
+    border-radius: 0.25rem; /* 稍微圆角 */
+}
+
+.sidebar .list-group-item.active a {
+    color: #007bff !important; /* 激活时链接颜色更显眼 */
+    font-weight: bold;
+}
+
+/* 评论区标题样式 */
+.comments-section h3 {
+    margin-bottom: 1.5rem; /* 评论区标题下方外边距 */
+    border-bottom: 2px solid rgba(158, 142, 142, 0.1); /* 底部加线条 */
+    padding-bottom: 0.5rem; /* 线条与文本间隔 */
+    color: #333; /* 深色文字 */
+}
+
+/* 评论列表项样式 */
+.comments-section .list-group-item {
+    margin-bottom: 10px; /* 评论项之间间隔 */
+    border: 1px solid rgba(0, 0, 0, 0.31); /* 边框稍微浅一点 */
+    border-radius: 0.35rem; /* 圆角 */
+    background-color: rgba(248, 249, 250, 0.9); /* 浅色半透明背景 */
+}
+
+/* 评论者用户名和日期 */
+.comments-section .list-group-item h6 {
+     margin-bottom: 0.25rem;
+     font-weight: bold;
+}
+
+.comments-section .list-group-item small {
+    font-size: 0.8em;
+    color: rgba(158, 142, 142, 0.1); /* 灰色 */
+}
+
+/* 评论内容 */
+.comments-section .list-group-item p {
+    margin-bottom: 0;
+    white-space: pre-wrap; /* 保留换行符 */
+    word-break: break-word; /* 长单词换行 */
+}
+
+/* 评论表单卡片样式 */
+.comments-section .card.mt-4 {
+    margin-top: 2rem !important; /* 表单卡片与评论列表间隔大一点 */
+}
+
+/* 评论表单文本域 */
+.comments-section textarea.form-control {
+    /* 可以继承 .form-control 的样式，或者针对评论区做调整 */
+    /* 例如让其背景更透明一点 */
+    background-color: rgba(255, 255, 255, 0.7);
+    color: rgba(28, 25, 30, 0.82); /* 让评论输入的文本颜色更清晰 */
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.comments-section textarea.form-control::placeholder {
+     color: rgb(247, 248, 250); /*  placeholder颜色调整 */
+}
+
+.comments-section textarea.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(66, 163, 199, 0.7);
+    color: rgba(66, 163, 199, 0.7);
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+/* Optional: Style comment form labels for better contrast */
+.comments-section .form-label {
+    color: rgba(114, 184, 209, 0.89); /* Darker color for labels */
+    font-weight: bold;
+}
+/* static/css/style.css 新增美化样式 */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+.hero-overlay {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.hero-overlay h1, .hero-overlay p {
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+.card {
+    border-radius: 16px;
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.card-title a:hover {
+    color: rgb(33, 29, 29);
+}
+/* 去除导航栏蓝色边框与焦点轮廓 */
+.navbar a:focus,
+.navbar a:active,
+.navbar button:focus,
+.navbar button:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 透明导航栏，文字颜色深色 */
+.navbar {
+    background-color: transparent !important;
+    border: none !important;
+}
+.navbar-nav .nav-link {
+    color: #000 !important;
+}
+
+/* 登录注册背景全屏（在对应页面的 <body> 加 class） */
+body.login-register {
+    background-image: url('/static/images/3.jpg'); /* 替换路径 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+
+
+/* 新增或修改的头像样式，用于“我的信息”页面的主头像 */
+.profile-display-avatar {
+    width: 200px; /* 增大头像尺寸 */
+    height: 200px; /* 增大头像尺寸 */
+    object-fit: cover; /* 确保图片覆盖整个区域 */
+    border-radius: 50%; /* 保证圆形 */
+    border: 6px solid rgba(255, 255, 255, 0.9); /* 更明显的白色边框 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* 更突出的阴影效果 */
+    margin: 0 auto 2rem auto; /* 居中显示并增加下方间距 */
+    display: block; /* 确保 margin auto 居中生效 */
+}
+/* 现有 profile-avatar 样式，可以保留不变，或根据需要调整 */
+/* 如果你在 profile.html 只使用 profile-display-avatar，这个可能就用不到了 */
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #eee;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1rem;
+}

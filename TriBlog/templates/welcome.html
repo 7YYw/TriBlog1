@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>欢迎来到TriBlog博客</title>
+    <!-- 引入自定义的欢迎页样式 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/welcome.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <!-- 背景图片将在CSS中设置 -->
+        <div class="overlay"></div> <!-- 用于背景蒙层 -->
+        <div class="welcome-content">
+            <h1>欢迎来到专属的TriBlog博客</h1>
+            <p>好看的皮囊，千篇一律。有趣的灵魂，万里挑一~</p>
+            <div class="welcome-links">
+                <a href="{{ url_for('login') }}" class="welcome-btn">登录</a>
+                <a href="{{ url_for('register') }}" class="welcome-btn">注册</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
